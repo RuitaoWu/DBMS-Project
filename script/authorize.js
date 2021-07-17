@@ -40,14 +40,15 @@ exports.register = (req,res) => {
 // user login
 exports.login = (req,res) =>{
     const name = req.body.username;
-    db.query('SELECT * FROM user_infor WHERE user_name = ?',[name],(err, results) => {
+    const passcode = req.body.password;
+    db.query('SELECT * FROM user_infor WHERE user_name = ? AND password = ?',[name,passcode],(err, results) => {
         if(err){
             console.log(err);
         }
         if(results.length > 0){
-            return res.render('signin',{ message: "ok"});
+            return res.render('signin',{ message: "Success"});
         }else{
-            return res.render('signin',{ message: "invalide"});
+            return res.render('signin',{ message: "Username or password is invalid"});
         }
         
     })
