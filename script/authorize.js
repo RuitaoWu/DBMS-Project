@@ -10,7 +10,7 @@ const db = mysql.createConnection({
 exports.register = (req,res) => {
     console.log(req.body);
     const {username,password,confirmpassword} = req.body;
-    db.query('SELECT user_name FROM user_infor WHERE user_name=?',[username], (err, results) =>{
+    db.query('SELECT username FROM users WHERE username=?',[username], (err, results) =>{
         if(err){
             console.log(err);
         }
@@ -23,7 +23,7 @@ exports.register = (req,res) => {
                 message: 'password is not identical'
             });
         }
-        db.query('INSERT INTO user_infor SET ?',{user_name:username, password:password}, (err, results) =>{
+        db.query('INSERT INTO users SET ?',{username:username, password:password}, (err, results) =>{
             if(err){
                 console.log(err);
             }else{
@@ -41,7 +41,7 @@ exports.register = (req,res) => {
 exports.login = (req,res) =>{
     const name = req.body.username;
     const passcode = req.body.password;
-    db.query('SELECT id FROM user_infor WHERE user_name = ? AND password = ?',[name,passcode],(err, results) => {
+    db.query('SELECT username FROM users WHERE username = ? AND password = ?',[name,passcode],(err, results) => {
         if(err){
             console.log(err);
         }
@@ -53,4 +53,10 @@ exports.login = (req,res) =>{
         }
         
     })
+}
+
+// user logout
+exports.logout = (req,res) =>{
+    req.session.destroy();
+    res.redirect('/');
 }
