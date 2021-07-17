@@ -41,12 +41,12 @@ exports.register = (req,res) => {
 exports.login = (req,res) =>{
     const name = req.body.username;
     const passcode = req.body.password;
-    db.query('SELECT username FROM users WHERE username = ? AND password = ?',[name,passcode],(err, results) => {
+    db.query('SELECT * FROM users WHERE username = ? AND password = ?',[name,passcode],(err, results) => {
         if(err){
             console.log(err);
         }
         if(results.length > 0){
-            console.log(results);
+            console.log(results[0].id);
             return res.render('user',{ username:name, userid: results[0].id}); 
         }else{
             return res.render('user',{ username: "Username or password is invalid"});
