@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html{
+            box-sizing: border-box;
+        }
+        *,*::after,*::before{
+            box-sizing: inherit;
+        }
+        nav{
+            background:rgb(170, 137, 201);
+            display: flex;
+            justify-content: space-between;
+        }
+        nav span a{
+            text-decoration: none;
+            padding: inherit;
+            font-size: 20px;
+            color: black;
+        }
+        nav span a:hover{
+            background: steelblue;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>DBMS Project</h1>
+        <button >Log Out</button>
+    </nav>
+    <div>
+    {{#if username}}
+        <h3>Welcome {{username}}!</h3>
+    {{else}}
+        <h3>Please Login</h3>
+    {{/if}}
+    {{#if userid}}
+        <h3>Your ID: {{userid}}</h3>
+    {{else}}
+        <h3></h3>
+    {{/if}}
+    </div>
+</body>
+<footer>
+    All Rights Reserved&copy; 2021
+</footer>
+</html>
