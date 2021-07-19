@@ -31,13 +31,17 @@
 <body>
     <nav>
         <h1>DBMS Project</h1>
-        <button onclick="logout()">Log Out</button>
+        <form action="/verify/logout" method="POST" id="logoutform">
+            <button type="submit" form="logoutform">Log Out</button>
+        </form>
+        
     </nav>
     <div>
     {{#if username}}
-        <h3>Welcome {{username}}!</h3>
+        <h3>Welcome {{username}}!</h3><br>
     {{else}}
-        <h3>Please Login</h3>
+        <h3>Please Login</h3><br>
+        <h4><a href="/login">Login</a></h4>
     {{/if}}
     {{#if userid}}
         <h3>Your ID: {{userid}}</h3>

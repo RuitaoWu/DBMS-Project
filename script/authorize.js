@@ -46,7 +46,6 @@ exports.login = (req,res) =>{
             console.log(err);
         }
         if(results.length > 0){
-            console.log(results[0].id);
             return res.render('user',{ username:name, userid: results[0].id}); 
         }else{
             return res.render('user',{ username: "Username or password is invalid"});
@@ -57,6 +56,5 @@ exports.login = (req,res) =>{
 
 // user logout
 exports.logout = (req,res) =>{
-    req.session.destroy();
-    res.redirect('/');
+    return res.render('user',{ username:"", userid: ""}); 
 }
