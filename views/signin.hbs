@@ -36,7 +36,46 @@
         nav ul li a:hover{
             background: steelblue;
         }
+
+        .container {
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+            width: 300px;
+            border:black solid;
+            box-shadow: 5px 10px gray;
+            border-radius: 20px;
+            margin-top: 2px;
+            padding: 15px;       
+        }
+
+        .container input {
+            width: 100%;
+            margin: 2px;
+            clear: both;
+        }
+        .btn{
+            background-color: #4CAF50;
+            color: white;
+            width: 25%;
+            border-radius: 5px;
+            margin: auto;
+        }
+        footer{
+            text-align: center;
+            margin: 10px;
+        }
     </style>
+    <script>
+        function validateForm() {
+            var x = document.forms["myForm"]["username"].value;
+            var y = document.forms["myForm"]["password"].value;
+            if (x == "" || x == null || y == "" || y == null) {
+                alert("Name or Password must be filled out");
+                return false;
+            }
+        }
+    </script>
 </head>
 <body>
     <nav>
@@ -47,19 +86,19 @@
             <li><a href="/register">Register</a></li>
         </ul>
     </nav>
-    <div>
-        <h2>New User Sign Up Form</h2>
-        <form action="/verify/login" method="POST">
+    <div class="container">
+        <h2>Login Form</h2>
+        <form name="myForm" action="/verify/login" onsubmit="return validateForm()" method="POST" required>
             <label for="username">User Name: </label>
             <input type="text" name="username"><br>
             <label for="password">Password: </label>
             <input type="password" name="password"><br>
-            <input type="submit" value="Submit">
+            <input class="btn" type="submit" value="Submit">
         </form>
+        {{#if message}}
+            <h3>{{message}}</h3>
+        {{/if}}
     </div>
-    {{#if message}}
-        <h3>{{message}}</h3>
-    {{/if}}
 </body>
 <footer>
     All Rights Reserved&copy; 2021

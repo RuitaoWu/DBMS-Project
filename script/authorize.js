@@ -7,14 +7,15 @@ const db = mysql.createConnection({
 })
 
 //new user registration
+//Node.js use placeholder for the SQL Injection prevent
 exports.register = (req,res) => {
     console.log(req.body);
-    const {username,password,confirmpassword} = req.body;
+    const {username,password,confirmpassword,fname,lname,email} = req.body;
     db.query('SELECT username FROM users WHERE username=?',[username], (err, results) =>{
         if(err){
-            console.log(err);
+            console.error();
         }
-        if(results.length > 0 ){
+        if(results.length > 0){
             return res.render('regi',{
                 message: 'user name used'
             });
@@ -23,7 +24,19 @@ exports.register = (req,res) => {
                 message: 'password is not identical'
             });
         }
-        db.query('INSERT INTO users SET ?',{username:username, password:password}, (err, results) =>{
+
+        db.query('SELECT email FROM users WHERE email=?',[email], (err,results) =>{
+            if(err){
+                throw err;
+            }
+            if(results.length > 0){
+                return res.render('regi',{
+                    message: 'Email is used'
+                });
+            }
+        })
+
+        db.query('INSERT INTO users SET ?',{username:username, password:password,email:email,fname:fname,lname:lname}, (err, results) =>{
             if(err){
                 console.log(err);
             }else{
@@ -46,9 +59,10 @@ exports.login = (req,res) =>{
             console.log(err);
         }
         if(results.length > 0){
-            return res.render('user',{ username:name, userid: results[0].id}); 
+            console.log(results[0].email);
+            return res.render('user',{ username:name, userid: results[0].id, email:results[0].email,fname:results[0].fname,lname:results[0].lname}); 
         }else{
-            return res.render('user',{ username: "Username or password is invalid"});
+            return res.render('signin',{ message: "Username or password is invalid"});
         }
         
     })

@@ -36,7 +36,49 @@
         nav ul li a:hover{
             background: steelblue;
         }
+        .container {
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+            width: 300px;
+            border:black solid;
+            box-shadow: 5px 10px gray;
+            border-radius: 20px;
+            margin-top: 2px;
+            padding: 15px;       
+        }
+
+        .container input {
+            width: 100%;
+            margin: 2px;
+            clear: both;
+        }
+        .btn{
+            background-color: #4CAF50;
+            color: white;
+            width: 25%;
+            border-radius: 5px;
+            margin: auto;
+        }
+        footer{
+            text-align: center;
+            margin: 10px;
+        }
     </style>
+    <script>
+        function validateForm() {
+            var uname = document.forms["myForm"]["username"].value;
+            var passcode = document.forms["myForm"]["password"].value;
+            var fisrtName = document.forms["myForm"]["fname"].value;
+            var lastName = document.forms["myForm"]["lname"].value;
+            var emailAddress = document.forms["myForm"]["email"].value;
+            var passcodeConfirm = document.forms["myForm"]["confirmpassword"].value;
+            if (uname == "" || uname == null || passcode == "" || passcode == null || fisrtName =="" || fisrtName == null || lastName == "" || lastName == null || emailAddress == "" || emailAddress == null || passcodeConfirm == "" || passcodeConfirm == null) {
+                alert("Fill out all blank(s)!");
+                return false;
+            }
+        }
+    </script>
 </head>
 <body>
     <nav>
@@ -47,21 +89,27 @@
             <li><a href="/register">Register</a></li>
         </ul>
     </nav>
-    <div>
+    <div class="container">
         <h2>New User Sing Up Form</h2>
-        <form action="/verify/register" method="POST">
+        <form name="myForm" action="/verify/register" onsubmit="return validateForm()" method="POST" required>
+            <label for="fname">First Name: </label>
+            <input type="text" name="fname"><br>
+            <label for="lname">Last Name: </label>
+            <input type="text" name="lname"><br>
+            <label for="email">Email: </label>
+            <input type="email" name="email"><br>
             <label for="username">User Name: </label>
             <input type="text" name="username"><br>
             <label for="password">Password: </label>
             <input type="password" name="password"><br>
             <label for="confirm-pw">Confirm Password: </label>
             <input type="password" name="confirmpassword">
-            <input type="submit" value="Submit">
+            <input class="btn" type="submit" value="Submit">
         </form>
+        {{#if message}}
+            <h3>{{message}}</h3>
+        {{/if}}
     </div>
-    {{#if message}}
-        <h3>{{message}}</h3>
-    {{/if}}
 </body>
 <footer>
     All Rights Reserved&copy; 2021
