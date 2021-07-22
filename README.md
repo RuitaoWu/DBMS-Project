@@ -16,15 +16,16 @@ Execute Process<br>
     - create a new database on your local PC named 'dbms-proj'<br>
     - create a new table inside the database named 'users'<br>
     - create three column inside the table that are: 'id', 'password', 'username','email','fname','lname'<br>
-- Otherwise Execute the SQL
-    - ```
-        CREATE DATABASE dbms-proj
-        CREATE TABBLE users {
-            id int(11) PRIMARY KEY AUTO INCREMENT NOT NULL,
-            password VARCHAR(20) NOT NULL,
-            username VARCHAR(20) NOT NULL,
-            email VARCHAR(20) NOT NULL UNIQUE,
-            fname VARCHAR(20) NOT NULL,
-            lname VARCHAR(20) NOT NULL
-        }
+- Otherwise Execute the SQL(P.S. the following SQL will drop the database first if it exists)
+    - ``` 
+        DROP DATABASE dbms_proj;
+        CREATE DATABASE test;
+        CREATE TABLE dbms_proj.users(
+            id INT(11) PRIMARY KEY NOT NULL,
+            username VARCHAR(30) NOT NULL,
+            password VARCHAR(30) NOT NULL,
+            email VARCHAR(30) NOT NULL UNIQUE,
+            fname VARCHAR(30) NOT NULL,
+            lname VARCHAR(30) NOT NULL
+        );
      ```

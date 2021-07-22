@@ -59,7 +59,7 @@ exports.login = (req,res) =>{
             console.log(err);
         }
         if(results.length > 0){
-            console.log(results[0].email);
+            console.log(results);
             return res.render('user',{ username:name, userid: results[0].id, email:results[0].email,fname:results[0].fname,lname:results[0].lname}); 
         }else{
             return res.render('signin',{ message: "Username or password is invalid"});
