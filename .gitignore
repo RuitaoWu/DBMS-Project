@@ -1,5 +1,4 @@
-//sql file
-*.sql
+
 .DS_Store
 node_modules
 /dist

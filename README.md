@@ -21,7 +21,7 @@ Execute Process<br>
         DROP DATABASE dbms_proj;
         CREATE DATABASE test;
         CREATE TABLE dbms_proj.users(
-            id INT(11) PRIMARY KEY NOT NULL,
+            id INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
             username VARCHAR(30) NOT NULL,
             password VARCHAR(30) NOT NULL,
             email VARCHAR(30) NOT NULL UNIQUE,
