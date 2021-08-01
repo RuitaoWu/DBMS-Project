@@ -2,11 +2,12 @@
 ### Requirement<br>
 [Node.js](https://nodejs.org/en/)<br>
 [Plateform--optional](https://www.apachefriends.org/index.html)<br>
+---  
 `git clone https://github.com/RuitaoWu/DBMS-Project.git`<br>
 `cd DBMS-Project`<br>
 `npm install`<br>
-run `npm i express mysql dotenv hbs` if you don't have 'node_modules' folder  
----
+run `npm i express mysql dotenv hbs` if you don't have 'node_modules' folder<br>
+---  
 Execute Process<br>
  - Execute the following SQL script 
  - `ALTER USER 'comp440'@'localhost' IDENTIFIED WITH mysql_native_password BY 'pass1234'`  
