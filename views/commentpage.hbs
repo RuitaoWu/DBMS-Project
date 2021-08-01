@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+        function validateForm() {
+            var blogid = document.forms["myForm"]["blognum"].value;
+            var sentiment = document.forms["myForm"]["senti"].value;
+            var descript = document.forms["myForm"]["descript"].value;
+            if (blogid == "" || blogid == null || sentiment == "" || sentiment == null || descript =="" || descript == null) {
+                alert("Fill out all blank(s)!");
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>User ID: {{userid}}</h1>
+    <form action="/verify/subcomment" method="post" onsubmit="return validateForm()" required>
+        <label for="blognum">Input the Blog ID: </label>
+        <input type="text" name="blognum" id=""><br>
+        <label for="senti">Sentiment Option</label>
+        <select name="senti" >
+            <option value="" disabled selected>Sentimental Selection</option>
+            <option value="negative">negative</option>
+            <option value="positive">positive</option>
+        </select><br>
+        <label for="descript">Description</label>
+        <textarea name="descript" id="" cols="30" rows="10"></textarea><br>
+        <input type="submit" value="New Comment">
+    </form>
+    <button onclick="goBack()">Previous Page</button>
+</body>
+</html>

@@ -3,7 +3,18 @@ const router = express.Router();
 const registerController = require('../script/authorize');
 const loginController = require('../script/authorize');
 const logoutController = require('../script/authorize');
+const initController = require('../script/authorize');
+const insertController = require('../script/authorize');
+const subnewblogController = require('../script/authorize');
+const bloglistControlloer = require('../script/authorize');
+const commentPageController =require('../script/authorize');
 router.post('/register',registerController.register),
 router.post('/login',loginController.login);
 router.post('/logout',logoutController.logout);
+router.post('/initdb',initController.initdb);
+router.post('/insert',insertController.insertblog);
+router.post('/newblog',subnewblogController.subnewblog);
+router.post ('/list',bloglistControlloer.listBlog);
+router.post('/comment',commentPageController.commentpage);
+router.post('/subcomment',commentPageController.subnewcomment);
 module.exports = router;

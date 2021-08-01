@@ -46,6 +46,11 @@
             color: white;
         }
     </style>
+     <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 </head>
 <body>
     <nav>
@@ -56,12 +61,21 @@
     </nav>
     <div class="container">
         {{#if username}}
-            <h3>Welcome {{username}}!<br>First Name: {{fname}}&nbsp;&nbsp;Last Name: {{lname}}<br>ID: {{userid}}<br>Email: {{email}}</h3>
+            <h3>Welcome {{username}}!<br>ID: {{userid}}<br>Email: {{email}}</h3>
+            <form action="/verify/insert" method="POST" id="insertform">
+            <input type="hidden" name="uid" value={{userid}}>
+            <button type="submit" form="insertform">Insert New Blog</button>
+            </form>
+            <form action="/verify/list" method="POST" id="listform">
+            <input type="hidden" name="usid" value={{userid}}>
+            <button type="submit" form="listform">List Blog</button>
+            </form>
         {{else}}
             <h3>Please Login: <a href="/login">Login</a></h3>
             <h3>Return To Home Page: <a href="/">Home</a></h3>
         {{/if}}
     </div>
+<button onclick="goBack()">Go Back</button>
 </body>
 <footer>
     All Rights Reserved&copy; 2021
