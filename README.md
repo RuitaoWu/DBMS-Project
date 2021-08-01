@@ -3,10 +3,12 @@
 [Node.js](https://nodejs.org/en/)<br>
 [Plateform--optional](https://www.apachefriends.org/index.html)<br>
 ---  
-`git clone https://github.com/RuitaoWu/DBMS-Project.git`<br>
-`cd DBMS-Project`<br>
-`npm install`<br>
-run `npm i express mysql dotenv hbs` if you don't have 'node_modules' folder<br>
+```
+git clone https://github.com/RuitaoWu/DBMS-Project.git  
+cd DBMS-Project  
+npm install  
+```
+run `npm i express mysql dotenv hbs` if you don't have 'node_modules' folder  
 ---  
 Execute Process<br>
  - Execute the following SQL script 
