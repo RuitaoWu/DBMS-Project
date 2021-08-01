@@ -8,7 +8,8 @@ git clone https://github.com/RuitaoWu/DBMS-Project.git
 cd DBMS-Project  
 npm install  
 ```
-run `npm i express mysql dotenv hbs` if you don't have 'node_modules' folder  
+run the follow command if you don't have 'node_modules' folder  
+`npm i express mysql dotenv hbs`  
 ---  
 Execute Process<br>
  - Execute the following SQL script 
