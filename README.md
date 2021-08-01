@@ -9,7 +9,7 @@ cd DBMS-Project
 npm install  
 ```
 run the follow command if you don't have 'node_modules' folder  
-`npm i express mysql dotenv hbs`  
+```npm i express mysql dotenv hbs```  
 ---  
 Execute Process<br>
  - Execute the following SQL script 
