@@ -23,7 +23,7 @@
     </script>
 </head>
 <body>
-    <form action="/verify//newblog" method="POST" onsubmit="return validateForm()" required>
+    <form name="myForm" action="/verify//newblog" method="POST" onsubmit="return validateForm()" required>
         <label for="uid">User ID: </label>
         <input type="text" name="uid" value={{userid}} disabled style="border: none;"><br>
         <label for="subject">Subject: </label>

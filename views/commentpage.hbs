@@ -22,7 +22,7 @@
 </head>
 <body>
     <h1>User ID: {{userid}}</h1>
-    <form action="/verify/subcomment" method="post" onsubmit="return validateForm()" required>
+    <form name="myForm" action="/verify/subcomment" method="post" onsubmit="return validateForm()" required>
         <label for="blognum">Input the Blog ID: </label>
         <input type="text" name="blognum" id=""><br>
         <label for="senti">Sentiment Option</label>
