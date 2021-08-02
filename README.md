@@ -14,7 +14,7 @@ Database<br>
  - Execute the following SQL script if there has access denied SQL error  
  - `ALTER USER 'comp440'@'localhost' IDENTIFIED WITH mysql_native_password BY 'pass1234'`  
  - User 'comp440' may occurs error if the privilege isn't sufficient  
- Crruent Feature(s)  
+Crruent Feature(s)  
 1. New User register
 2. log in
 3. log out
