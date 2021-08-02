@@ -166,11 +166,15 @@ exports.subnewblog = (req,res)=>{
                 }
             });
             tempBlogId=db.query("SELECT blogid FROM `blogs` WHERE userid= ?",[tempUid]);
-            db.query("INSERT INTO `blogstags` SET ?",{tag:tag,blogid:tempUid},(err)=>{
-                if(err){
-                    console.log(err);
-                }
-            });
+            const tagArr = tag.split(",");
+            for(i =0;i < tagArr.length;i++){
+                db.query("INSERT INTO `blogstags` SET ?",{tag:tagArr[i],blogid:tempUid},(err)=>{
+                    if(err){
+                        console.log(err);
+                    }
+                });
+            }
+            
         }
         
     });
