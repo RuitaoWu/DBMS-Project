@@ -7,7 +7,7 @@ const db = mysql.createConnection({
 })
 var theDate = new Date();
 var year = theDate.getFullYear();
-var mon = theDate.getMonth();
+var mon = theDate.getMonth()+1;
 var day = theDate.getDate();
 var postDate = year+"-"+mon+"-"+day;
 //save user id
@@ -153,11 +153,29 @@ exports.insertblog = (req,res) =>{
 //new blog
 exports.subnewblog = (req,res)=>{
     const {subject,descript,tag} = req.body;
+
+    //
+    // db.query("SELECT COUNT(*) as count FROM blogs WHERE userid = ? AND date = ?",[tempUid,new Date()],(err,rows)=>{
+    //     if(rows[0].count == 2){
+    //         return res.render('insertblog',{message:"You have already posted 2 blogs today"});
+    //     }
+    //     else{
+    //         db.query("INSERT INTO blogs (userid,subject,description,tag,date) VALUES (?,?,?,?,?)",[tempUid,subject,descript,tag,new Date()],(err,rows)=>{
+    //             if(err){
+    //                 return res.render('insertblog',{message:"Error inserting blog"});
+    //             }
+    //             else{
+    //                 return res.render('insertblog',{message:"Success"});
+    //             }
+    //         });
+    //     }
+    // });
     //check date
-    db.query("SELECT count(userid) AS useridCount FROM blogs where userid = ?",[tempUid],(err,countuid)=>{
+    db.query("SELECT count(userid) AS useridCount FROM blogs where userid = ? AND pdate = ?",[tempUid,postDate],(err,countuid)=>{
+        console.log("this is: "+countuid[0].useridCount+", and postDate: "+postDate);
         if(err) throw err;
         if(countuid[0].useridCount >= 2){
-            return res.render('insertblog',{message:"Current userID: "+tempUid+" can not insert new blog"});
+            return res.render('insertblog',{message:"Current userID: "+tempUid+" have already posted 2 blogs today"});
         }else{
             db.query("INSERT INTO `blogs` SET ?",{subject:subject,description:descript,pdate:new Date(),userid:tempUid},(err,results)=>{
                 if(err){
