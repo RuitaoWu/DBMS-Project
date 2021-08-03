@@ -153,6 +153,7 @@ exports.insertblog = (req,res) =>{
 //new blog
 exports.subnewblog = (req,res)=>{
     const {subject,descript,tag} = req.body;
+    //check date
     db.query("SELECT count(userid) AS useridCount FROM blogs where userid = ?",[tempUid],(err,countuid)=>{
         if(err) throw err;
         if(countuid[0].useridCount >= 2){
