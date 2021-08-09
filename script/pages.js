@@ -37,4 +37,19 @@ router.get('/comment',(req,res)=>{
 router.get('/subcomment',(req,res)=>{
     res.render('subcomment');
 })
+router.get('/result',(req,res)=>{
+    res.render('searchresult');
+})
+router.get('/resultblog',(req,res)=>{
+    res.render('searchresult');
+})
+router.get('/resultfollwers',(req,res)=>{
+    res.render('searchresult');
+})
+router.get('/resultblogcontainstagx',(req,res)=>{
+    res.render('searchresult');
+})
+router.get('/resultusernevercomment',(req,res)=>{
+    res.render('searchresult');
+})
 module.exports = router;

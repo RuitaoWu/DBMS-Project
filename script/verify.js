@@ -8,6 +8,7 @@ const insertController = require('../script/authorize');
 const subnewblogController = require('../script/authorize');
 const bloglistControlloer = require('../script/authorize');
 const commentPageController =require('../script/authorize');
+const serachResultController = require('../script/authorize');
 router.post('/register',registerController.register),
 router.post('/login',loginController.login);
 router.post('/logout',logoutController.logout);
@@ -17,4 +18,9 @@ router.post('/newblog',subnewblogController.subnewblog);
 router.post ('/list',bloglistControlloer.listBlog);
 router.post('/comment',commentPageController.commentpage);
 router.post('/subcomment',commentPageController.subnewcomment);
+router.post('/result',serachResultController.serres);
+router.post('/resultblog',serachResultController.serblog);
+router.post('/resultfollwers',serachResultController.follwers);
+router.post('/resultblogcontainstagx',serachResultController.blogContainsTag);
+router.post('/resultusernevercomment',serachResultController.neverComment);
 module.exports = router;

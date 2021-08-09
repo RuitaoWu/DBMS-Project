@@ -50,6 +50,21 @@
         function goBack() {
             window.history.back();
         }
+        function validateForm() {
+            var x = document.forms["myForm"]["userX"].value;
+            var y = document.forms["myForm"]["userY"].value;
+            if (x == "" || x == null || y == "" || y == null) {
+                alert("user X or Y is missing!");
+                return false;
+            }
+        }
+        function validateForm2() {
+            var x = document.forms["tagForm"]["tagX"].value;
+            if (x == "" || x == null ) {
+                alert("Tag is missing!");
+                return false;
+            }
+        }
     </script>
 </head>
 <body>
@@ -62,13 +77,58 @@
     <div class="container">
         {{#if username}}
             <h3>Welcome {{username}}!<br>ID: {{userid}}<br>Email: {{email}}</h3>
+            {{!-- insert new blog --}}
             <form action="/verify/insert" method="POST" id="insertform">
             <input type="hidden" name="uid" value={{userid}}>
             <button type="submit" form="insertform">Insert New Blog</button>
             </form>
+            {{!-- list all blogs and comment --}}
             <form action="/verify/list" method="POST" id="listform">
             <input type="hidden" name="usid" value={{userid}}>
             <button type="submit" form="listform">List Blog</button>
+            </form>
+            {{!-- serach blogs of user X --}}
+            <form action="/verify/result" method="POST">
+                <fieldset>
+                    <legend> List all the blogs of user X, such that all the comments are positive for these blogs.</legend>
+                    <button type="submit">Submit</button>
+                    {{!-- <input type="text" placeholder="Input X"></input> --}}
+                </fieldset>   
+            </form>
+            {{!-- List the users who posted the most number of blogs on 10/10/2020; if there is a tie, 
+                list all the users who have a tie. --}}
+            <form action="/verify/resultblog" method="POST">
+                <fieldset>
+                    <legend>List users posted most on 10/10/2020</legend>
+                    <button type="submit">Submit</button>
+                    {{!-- <input type="text" placeholder=""></input> --}}
+                </fieldset>
+            </form>
+            {{!--  List the users who are followed by both X and Y. Usernames X and Y are inputs 
+                from the user. --}}
+            <form name="myForm" onsubmit="return validateForm()" action="/verify/resultfollwers" method="POST">
+                <fieldset>
+                <legend>List the users who are followed by both X and Y</legend>
+                <button type="submit">Submit</button>
+                <input type="text" name="userX" placeholder="input X"></input>
+                <input type="text" name="userY" placeholder="input Y"></input>
+                </fieldset>
+            </form>
+            {{!-- Display all the belogs contains tag X. Tag X is input from the user. --}}
+            <form name="tagForm" onsubmit="return validateForm2()" action="/verify/resultblogcontainstagx" method="POST">
+                <fieldset>
+                    <legend>Display all the belogs contains tag X. Tag X is input from the user</legend>
+                    <button type="submit">Submit</button>
+                    <input type="text" name="tagX" placeholder="input tag X"></input>
+                </fieldset>
+                
+            </form>
+            <form action="/verify/resultusernevercomment" method="POST">
+                <fieldset>
+                    <legend>Display all the users who never posted a comment</legend>
+                    <button type="submit">Submit</button>
+                    {{!-- <input type="text" placeholder=""></input> --}}
+                </fieldset>
             </form>
         {{else}}
             <h3>Please Login: <a href="/login">Login</a></h3>

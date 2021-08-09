@@ -23,3 +23,7 @@ Crruent Feature(s)
 6. User can only comment blog one time
 7. User can't comment his/her own blog
 8. Empty prevention
+---
+New Update
+1. Search user with different condition
+2. Display blogs contains specific tag

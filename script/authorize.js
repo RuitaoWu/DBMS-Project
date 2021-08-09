@@ -10,6 +10,7 @@ var year = theDate.getFullYear();
 var mon = theDate.getMonth()+1;
 var day = theDate.getDate();
 var postDate = year+"-"+mon+"-"+day;
+var positiveSentiment = "positive";
 //save user id
 var tempUid;
 //save blog id
@@ -247,6 +248,43 @@ exports.subnewcomment = (req,res)=>{
         }else{
             return res.render('subcomment',{testText:"Failed: "+blognum});
         }
+    })
+    
+}
+
+//serach result
+//List all the blogs of user X, such that all the comments are positive for these blogs. 
+exports.serres= (req,res)=>{
+    db.query("SELECT * FROM comments WHERE blogid IN (SELECT blogid FROM blogs WHERE userid = ?) AND sentiment = ?",[tempUid,positiveSentiment],(err,resComment)=>{
+        if(err) throw err;
+        return res.render('searchresult',{commetnData:resComment});
+    })
+    
+}
+//List the users who posted the most number of blogs on 10/10/2020; if there is a tie,list all the users who have a tie.
+exports.serblog= (req,res)=>{
+    return res.render('searchresult',{message:"serach blog"});
+}
+// List the users who are followed by both X and Y. Usernames X and Y are inputs from the user. 
+exports.follwers= (req,res)=>{
+    const {userX,userY} = req.body;
+    db.query("SELECT * FROM follows WHERE followerid = ? and leaderid in (select leaderid from follows where followerid = ?)",[userX,userY],(err,resultUser)=>{
+        if(err) throw err;
+        return res.render('searchresult',{userFollowedByXY: resultUser[0].leaderid,user1:userX,user2:userY});
+    })
+}
+exports.blogContainsTag= (req,res)=>{
+    const {tagX} = req.body;
+    db.query("SELECT b.blogid,b.subject,b.description,b.userid,blogstags.tag FROM blogs as b INNER JOIN blogstags ON b.blogid = blogstags.blogid  WHERE tag = ?",[tagX],(err,resTag)=>{
+        if (err) throw err;
+        return res.render('searchresult',{blogTag:resTag});
+    })
+    
+}
+exports.neverComment= (req,res)=>{
+    db.query("SELECT userid,username,email  FROM users WHERE userid NOT IN (SELECT authorid FROM comments)",(err,resUser)=>{
+        if(err) throw err;
+        return res.render('searchresult',{userInfo:resUser,titleInfo:"User Never Post Comment"});
     })
     
 }
