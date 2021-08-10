@@ -262,8 +262,28 @@ exports.serres= (req,res)=>{
     
 }
 //List the users who posted the most number of blogs on 10/10/2020; if there is a tie,list all the users who have a tie.
+//the following query will return total number of blogs that user posted on 2021-08-05
+//SELECT userid,count(*) as "total" FROM dbms.blogs where pdate="2021-08-05" group by userid;
 exports.serblog= (req,res)=>{
-    return res.render('searchresult',{message:"serach blog"});
+    let tempArr=[];
+    db.query("SELECT userid, COUNT(*) AS 'total' FROM dbms.blogs WHERE pdate = '2021-08-05' GROUP BY userid ORDER BY total DESC",(err,resMax)=>{
+        if(err) throw err;
+        if(resMax[0].total == 2){
+            for(let i=0;i<resMax.length;i++){
+                if(resMax[i].total == 2){
+                    tempArr.push(resMax[i].userid);
+                }
+            }
+        }else{
+            for(let i=0;i<resMax.length;i++){
+                if(resMax[i].total == 1){
+                    tempArr.push(resMax[i].userid);
+                }
+            }
+        }
+        
+    })
+    return res.render('searchresult',{arrayContent:tempArr+" posted most blogs"});
 }
 // List the users who are followed by both X and Y. Usernames X and Y are inputs from the user. 
 exports.follwers= (req,res)=>{
