@@ -85,7 +85,9 @@
             {{/each}}
         </table>
     {{/if}}
-    {{arrayContent}}
-    <button onclick="goBack()">Go Back</button>
+    {{#if  arrayContent}}
+    <h3>{{arrayContent}}</h3>
+    {{/if}}
+    <br><button onclick="goBack()">Go Back</button>
 </body>
 </html>

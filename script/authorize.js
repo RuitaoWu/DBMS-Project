@@ -268,22 +268,29 @@ exports.serblog= (req,res)=>{
     let tempArr=[];
     db.query("SELECT userid, COUNT(*) AS 'total' FROM dbms.blogs WHERE pdate = '2021-08-05' GROUP BY userid ORDER BY total DESC",(err,resMax)=>{
         if(err) throw err;
-        if(resMax[0].total == 2){
-            for(let i=0;i<resMax.length;i++){
-                if(resMax[i].total == 2){
-                    tempArr.push(resMax[i].userid);
-                }
-            }
+        if(resMax.length == 0){
+            return res.render('searchresult',{arrayContent:"No result!"});
         }else{
-            for(let i=0;i<resMax.length;i++){
-                if(resMax[i].total == 1){
-                    tempArr.push(resMax[i].userid);
+            if(resMax[0].total == 2){
+                for(let i=0;i<resMax.length;i++){
+                    if(resMax[i].total == 2){
+                        tempArr.push(resMax[i].userid);
+                    }
                 }
+                return res.render('searchresult',{arrayContent:"User "+tempArr+" posted most blogs"});
+            }
+            if(resMax[0].total == 1){
+                for(let i=0;i<resMax.length;i++){
+                    if(resMax[i].total == 1){
+                        tempArr.push(resMax[i].userid);
+                    }
+                }
+                return res.render('searchresult',{arrayContent:"User "+tempArr+" posted most blogs"});
             }
         }
         
     })
-    return res.render('searchresult',{arrayContent:tempArr+" posted most blogs"});
+    
 }
 // List the users who are followed by both X and Y. Usernames X and Y are inputs from the user. 
 exports.follwers= (req,res)=>{
