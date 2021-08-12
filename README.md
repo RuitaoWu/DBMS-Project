@@ -24,6 +24,7 @@ Crruent Feature(s)
 7. User can't comment his/her own blog
 8. Empty prevention
 ---
-New Update
+New Update(s)
 1. Search user with different condition
 2. Display blogs contains specific tag
+3. Return the user who posted most blogs on date (e.g. 2021-08-05 or any other date)
