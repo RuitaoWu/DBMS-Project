@@ -65,6 +65,13 @@
                 return false;
             }
         }
+        function validateForm3() {
+            var x = document.forms["myUserForm"]["inputUser"].value;
+            if (x == "" || x == null ) {
+                alert("User is missing!");
+                return false;
+            }
+        }
     </script>
 </head>
 <body>
@@ -88,9 +95,10 @@
             <button type="submit" form="listform">List Blog</button>
             </form>
             {{!-- serach blogs of user X --}}
-            <form action="/verify/result" method="POST">
+            <form action="/verify/result" name="myUserForm" onsubmit="return validateForm3()" method="POST">
                 <fieldset>
                     <legend> List all the blogs of user X, such that all the comments are positive for these blogs.</legend>
+                    <input type="number" name="inputUser" placeholder="Enter User X"></input>
                     <button type="submit">Submit</button>
                     {{!-- <input type="text" placeholder="Input X"></input> --}}
                 </fieldset>   

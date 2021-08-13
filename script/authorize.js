@@ -255,7 +255,8 @@ exports.subnewcomment = (req,res)=>{
 //serach result
 //List all the blogs of user X, such that all the comments are positive for these blogs. 
 exports.serres= (req,res)=>{
-    db.query("SELECT * FROM comments WHERE blogid IN (SELECT blogid FROM blogs WHERE userid = ?) AND sentiment = ?",[tempUid,positiveSentiment],(err,resComment)=>{
+    const {inputUser} = req.body;
+    db.query("SELECT * FROM comments WHERE blogid IN (SELECT blogid FROM blogs WHERE userid = ?) AND sentiment = ?",[inputUser,positiveSentiment],(err,resComment)=>{
         if(err) throw err;
         return res.render('searchresult',{commetnData:resComment});
     })
@@ -293,11 +294,13 @@ exports.serblog= (req,res)=>{
     
 }
 // List the users who are followed by both X and Y. Usernames X and Y are inputs from the user. 
+//SELECT * FROM follows WHERE leaderid = 4 AND followerid IN (SELECT followerid FROM follows WHERE leaderid = 9)
+//SELECT * FROM follows WHERE followerid = ? and leaderid in (select leaderid from follows where followerid = ?)
 exports.follwers= (req,res)=>{
     const {userX,userY} = req.body;
-    db.query("SELECT * FROM follows WHERE followerid = ? and leaderid in (select leaderid from follows where followerid = ?)",[userX,userY],(err,resultUser)=>{
+    db.query("SELECT * FROM follows WHERE leaderid = ? AND followerid IN (SELECT followerid FROM follows WHERE leaderid = ?)",[userX,userY],(err,resultUser)=>{
         if(err) throw err;
-        return res.render('searchresult',{userFollowedByXY: resultUser[0].leaderid,user1:userX,user2:userY});
+        return res.render('searchresult',{userFollowedByXY: resultUser[0].followerid,user1:userX,user2:userY});
     })
 }
 exports.blogContainsTag= (req,res)=>{
