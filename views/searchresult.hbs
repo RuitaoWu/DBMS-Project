@@ -23,6 +23,8 @@
 <body>
     {{#if userFollowedByXY}}
         <p style="font-size: 25px">User <b>{{userFollowedByXY}} </b>followed by <b>{{user1}}</b> and <b>{{user2}}</b></p>
+    {{else}}
+        <p>Invalid input or no result(s)</p>
     {{/if}}
     {{#if commetnData}}
         <table>
