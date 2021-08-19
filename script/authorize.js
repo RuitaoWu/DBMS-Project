@@ -18,17 +18,18 @@ var tempBlogId;
 //new user registration
 //Node.js use placeholder for the SQL Injection prevent
 exports.register = (req,res) => {
-    console.log(req.body);
     const {username,password,confirmpassword,email} = req.body;
     db.query('SELECT username FROM users WHERE username=?',[username], (err, results) =>{
         if(err){
             console.error();
         }
         if(results.length > 0){
+            console.log("Print at line 27: Username used");
             return res.render('regi',{
                 message: 'user name used'
             });
         } else if( password != confirmpassword){
+            console.log("Print at line 32: Password doesn't match");
             return res.render('regi',{
                 message: 'password is not identical'
             });
@@ -39,20 +40,21 @@ exports.register = (req,res) => {
                 throw err;
             }
             if(results.length > 0){
+                console.log("Print at line 43: Email used");
                 return res.render('regi',{
                     message: 'Email is used'
                 });
-            }
-        })
-
-        db.query('INSERT INTO users SET ?',{username:username, password:password,email:email}, (err, results) =>{
-            if(err){
-                console.log(err);
             }else{
-                console.log(results);
-                return res.render('regi',{
-                    message: 'Success'
-                });
+                db.query('INSERT INTO users SET ?',{username:username, password:password,email:email}, (err, results) =>{
+                    if(err){
+                        console.log(err);
+                    }else{
+                        console.log("Print at line 51: Sucess");
+                        return res.render('regi',{
+                            message: 'Success'
+                        });
+                    }
+                })
             }
         })
     })
@@ -179,6 +181,7 @@ exports.subnewblog = (req,res)=>{
         console.log("this is: "+countuid[0].useridCount+", and postDate: "+postDate);
         if(err) throw err;
         if(countuid[0].useridCount >= 2){
+            console.log("Print at line 184: Failed to insert new blog")
             return res.render('insertblog',{message:"Current userID: "+tempUid+" have already posted 2 blogs today"});
         }else{
             db.query("INSERT INTO `blogs` SET ?",{subject:subject,description:descript,pdate:new Date(),userid:tempUid},(err,results)=>{
@@ -239,7 +242,7 @@ exports.subnewcomment = (req,res)=>{
                         }else{
                             db.query("INSERT INTO `comments` SET ?",{sentiment:senti,description:descript,cdate:new Date(),blogid:blognum,authorid:tempUid},(err,results)=>{
                                 if(err) throw err;
-                                console.log(results);
+                                console.log("Print at line 245: Success Comment");
                                 return res.render('subcomment',{testText:"Success"});
                             });
                         }
@@ -249,6 +252,7 @@ exports.subnewcomment = (req,res)=>{
             })
             
         }else{
+            console.log("Print at line 255: Failed to submmit comment");
             return res.render('subcomment',{testText:"Failed: "+blognum});
         }
     })
