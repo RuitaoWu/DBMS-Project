@@ -69,11 +69,9 @@
         function validateForm() {
             var uname = document.forms["myForm"]["username"].value;
             var passcode = document.forms["myForm"]["password"].value;
-            var fisrtName = document.forms["myForm"]["fname"].value;
-            var lastName = document.forms["myForm"]["lname"].value;
             var emailAddress = document.forms["myForm"]["email"].value;
             var passcodeConfirm = document.forms["myForm"]["confirmpassword"].value;
-            if (uname == "" || uname == null || passcode == "" || passcode == null || fisrtName =="" || fisrtName == null || lastName == "" || lastName == null || emailAddress == "" || emailAddress == null || passcodeConfirm == "" || passcodeConfirm == null) {
+            if (uname == "" || uname == null || passcode == "" || passcode == null || emailAddress == "" || emailAddress == null || passcodeConfirm == "" || passcodeConfirm == null) {
                 alert("Fill out all blank(s)!");
                 return false;
             }
@@ -92,10 +90,6 @@
     <div class="container">
         <h2>New User Sing Up Form</h2>
         <form name="myForm" action="/verify/register" onsubmit="return validateForm()" method="POST" required>
-            {{!-- <label for="fname">First Name: </label>
-            <input type="text" name="fname"><br>
-            <label for="lname">Last Name: </label>
-            <input type="text" name="lname"><br> --}}
             <label for="email">Email: </label>
             <input type="email" name="email"><br>
             <label for="username">User Name: </label>
