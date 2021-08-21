@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,45 +8,53 @@
     <title>Document</title>
 </head>
 <style>
-    ul li{
+    ul li {
         list-style: none;
     }
-    table{
+
+    table {
         width: 100%;
     }
-    table, th, td {
+
+    table,
+    th,
+    td {
         border: 1px solid black;
     }
 </style>
- <script>
-        function goBack() {
-            window.history.back();
-        }
-    </script>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+
 <body>
-        <h1>User id: {{mestest}}</h1>
-        <table>
-            <tr>
-                <th>Blog ID</th>
-                <th>Subject</th>
-                <th>Descripthon</th>
-                <th>Post Date</th>
-                <th>User ID</th>
-                <th>Comment</th>
-            </tr>
-            {{#each userData}}
-            <tr>
-                <th>{{this.blogid}}</th>
-                <th>{{this.subject}}</th>
-                <th>{{this.description}}</th>
-                <th>{{this.pdate}}</th>
-                <th>{{this.userid}}</th>
-                <th><form action="/verify/comment" method="POST" id="comPage">
-                    </form>
-                    <button class="btn" type="submit" form="comPage">Comment</button></th>
-            </tr>
-            {{/each}}
-        </table>
-<button onclick="goBack()">Go Back</button>
+    <h1>User id: {{mestest}}</h1>
+    <table>
+        <tr>
+            <th>Blog ID</th>
+            <th>Subject</th>
+            <th>Descripthon</th>
+            <th>Post Date</th>
+            <th>User ID</th>
+            <th>Comment</th>
+        </tr>
+        {{#each userData}}
+        <tr>
+            <th>{{this.blogid}}</th>
+            <th>{{this.subject}}</th>
+            <th>{{this.description}}</th>
+            <th>{{this.pdate}}</th>
+            <th>{{this.userid}}</th>
+            <th>
+                <form action="/verify/comment" method="POST" id="comPage">
+                </form>
+                <button class="btn" type="submit" form="comPage">Comment</button>
+            </th>
+        </tr>
+        {{/each}}
+    </table>
+    <button onclick="goBack()">Go Back</button>
 </body>
+
 </html>

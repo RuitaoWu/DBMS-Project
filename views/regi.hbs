@@ -1,51 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        html{
+        html {
             box-sizing: border-box;
         }
-        *,*::after,*::before{
+
+        *,
+        *::after,
+        *::before {
             box-sizing: inherit;
         }
-        nav{
-            background:rgb(170, 137, 201);
+
+        nav {
+            background: rgb(170, 137, 201);
             display: flex;
             justify-content: space-between;
         }
-        nav ul{
+
+        nav ul {
             float: right;
             display: flex;
             justify-content: space-around;
         }
-        nav ul li{
+
+        nav ul li {
             padding: 2px;
             list-style: none;
             display: inline-block;
         }
-        nav ul li a{
+
+        nav ul li a {
             text-decoration: none;
             padding: inherit;
             font-size: 20px;
             color: black;
         }
-        nav ul li a:hover{
+
+        nav ul li a:hover {
             background: steelblue;
         }
+
         .container {
             justify-content: center;
             align-items: center;
             margin: auto;
             width: 300px;
-            border:black solid;
+            border: black solid;
             box-shadow: 5px 10px gray;
             border-radius: 20px;
             margin-top: 2px;
-            padding: 15px;       
+            padding: 15px;
         }
 
         .container input {
@@ -53,14 +63,16 @@
             margin: 2px;
             clear: both;
         }
-        .btn{
+
+        .btn {
             background-color: #4CAF50;
             color: white;
             width: 25%;
             border-radius: 5px;
             margin: auto;
         }
-        footer{
+
+        footer {
             text-align: center;
             margin: 10px;
         }
@@ -71,13 +83,18 @@
             var passcode = document.forms["myForm"]["password"].value;
             var emailAddress = document.forms["myForm"]["email"].value;
             var passcodeConfirm = document.forms["myForm"]["confirmpassword"].value;
+<<<<<<< HEAD
             if (uname == "" || uname == null || passcode == "" || passcode == null || emailAddress == "" || emailAddress == null || passcodeConfirm == "" || passcodeConfirm == null) {
+=======
+            if (uname == "" || uname == null || passcode == "" || passcode == null || fisrtName == "" || fisrtName == null || lastName == "" || lastName == null || emailAddress == "" || emailAddress == null || passcodeConfirm == "" || passcodeConfirm == null) {
+>>>>>>> 39d50d2797ddb254b4feaaef1f8ae79cbb2cf8a5
                 alert("Fill out all blank(s)!");
                 return false;
             }
         }
     </script>
 </head>
+
 <body>
     <nav>
         <h1>DBMS Project</h1>
@@ -88,7 +105,7 @@
         </ul>
     </nav>
     <div class="container">
-        <h2>New User Sing Up Form</h2>
+        <h2>New User Sign Up Form</h2>
         <form name="myForm" action="/verify/register" onsubmit="return validateForm()" method="POST" required>
             <label for="email">Email: </label>
             <input type="email" name="email"><br>
@@ -101,11 +118,12 @@
             <input class="btn" type="submit" value="Submit">
         </form>
         {{#if message}}
-            <h3>{{message}}</h3>
+        <h3>{{message}}</h3>
         {{/if}}
     </div>
 </body>
 <footer>
     All Rights Reserved&copy; 2021
 </footer>
+
 </html>
