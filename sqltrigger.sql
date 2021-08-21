@@ -5,7 +5,7 @@ USE `dbms`$$
 CREATE DEFINER=`comp440`@`localhost` TRIGGER `blogs_BEFORE_INSERT` BEFORE INSERT ON `blogs` FOR EACH ROW BEGIN
 	declare rowcount int;
 	SELECT COUNT(*) INTO rowcount FROM blogs WHERE userid=NEW.userid AND pdate=CURDATE();
-    IF(rowcount>=2)THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'You cannot post more than two belogs per day!Please try tomorrow.'; 
+    IF(rowcount>=2)THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'You cannot post more than two blogs per day!Please try tomorrow.'; 
 	 END IF;
 END$$
 DELIMITER ;
