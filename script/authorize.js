@@ -23,6 +23,9 @@ exports.register = (req,res) => {
         if(err){
             console.error();
         }
+        if(username == "" || password == "" || confirmpassword == "" || email == ""){
+            return res.render('regi',{message:"Please fill in all the fields"});
+        }
         if(results.length > 0){
             console.log("Print at line 27: Username used");
             return res.render('regi',{
