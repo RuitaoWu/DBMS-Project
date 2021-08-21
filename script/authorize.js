@@ -7,9 +7,9 @@ const db = mysql.createConnection({
 })
 var theDate = new Date();
 var year = theDate.getFullYear();
-var mon = theDate.getMonth()+1;
+var mon = theDate.getMonth() + 1;
 var day = theDate.getDate();
-var postDate = year+"-"+mon+"-"+day;
+var postDate = year + "-" + mon + "-" + day;
 var positiveSentiment = "positive";
 //save user id
 var tempUid;
@@ -17,43 +17,54 @@ var tempUid;
 var tempBlogId;
 //new user registration
 //Node.js use placeholder for the SQL Injection prevent
-exports.register = (req,res) => {
-    const {username,password,confirmpassword,email} = req.body;
-    db.query('SELECT username FROM users WHERE username=?',[username], (err, results) =>{
-        if(err){
+exports.register = (req, res) => {
+    const {
+        username,
+        password,
+        confirmpassword,
+        email
+    } = req.body;
+    db.query('SELECT username FROM users WHERE username=?', [username], (err, results) => {
+        if (err) {
             console.error();
         }
-        if(username == "" || password == "" || confirmpassword == "" || email == ""){
-            return res.render('regi',{message:"Please fill in all the fields"});
+        if (username == "" || password == "" || confirmpassword == "" || email == "") {
+            return res.render('regi', {
+                message: "Please fill in all the fields"
+            });
         }
-        if(results.length > 0){
+        if (results.length > 0) {
             console.log("Print at line 27: Username used");
-            return res.render('regi',{
+            return res.render('regi', {
                 message: 'user name used'
             });
-        } else if( password != confirmpassword){
+        } else if (password != confirmpassword) {
             console.log("Print at line 32: Password doesn't match");
-            return res.render('regi',{
+            return res.render('regi', {
                 message: 'password is not identical'
             });
         }
 
-        db.query('SELECT email FROM users WHERE email=?',[email], (err,results) =>{
-            if(err){
+        db.query('SELECT email FROM users WHERE email=?', [email], (err, results) => {
+            if (err) {
                 throw err;
             }
-            if(results.length > 0){
+            if (results.length > 0) {
                 console.log("Print at line 43: Email used");
-                return res.render('regi',{
+                return res.render('regi', {
                     message: 'Email is used'
                 });
-            }else{
-                db.query('INSERT INTO users SET ?',{username:username, password:password,email:email}, (err, results) =>{
-                    if(err){
+            } else {
+                db.query('INSERT INTO users SET ?', {
+                    username: username,
+                    password: password,
+                    email: email
+                }, (err, results) => {
+                    if (err) {
                         console.log(err);
-                    }else{
+                    } else {
                         console.log("Print at line 51: Sucess");
-                        return res.render('regi',{
+                        return res.render('regi', {
                             message: 'Success'
                         });
                     }
@@ -65,31 +76,42 @@ exports.register = (req,res) => {
 
 
 // user login
-exports.login = (req,res) =>{
+exports.login = (req, res) => {
     const name = req.body.username;
     const passcode = req.body.password;
-    db.query('SELECT * FROM users WHERE username = ? AND password = ?',[name,passcode],(err, results) => {
-        if(err){
+    db.query('SELECT * FROM users WHERE username = ? AND password = ?', [name, passcode], (err, results) => {
+        if (err) {
             console.log(err);
         }
-        if(results.length > 0){
+        if (results.length > 0) {
             tempUid = results[0].userid;
-            return res.render('user',{ username:name, userid: results[0].userid, email:results[0].email,fname:results[0].fname,lname:results[0].lname}); 
-        }else{
-            return res.render('signin',{ message: "Username or password is invalid"});
+            return res.render('user', {
+                username: name,
+                userid: results[0].userid,
+                email: results[0].email,
+                fname: results[0].fname,
+                lname: results[0].lname
+            });
+        } else {
+            return res.render('signin', {
+                message: "Username or password is invalid"
+            });
         }
-        
+
     })
 }
 
 // user logout
-exports.logout = (req,res) =>{
-    return res.render('user',{ username:"", userid: ""}); 
+exports.logout = (req, res) => {
+    return res.render('user', {
+        username: "",
+        userid: ""
+    });
 }
 
 
 //database initiate
-exports.initdb = (req,res) => {
+exports.initdb = (req, res) => {
     db.query("/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */");
     db.query("/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */");
     db.query("/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */");
@@ -144,8 +166,10 @@ exports.initdb = (req,res) => {
     db.query("LOCK TABLES `users` WRITE");
     db.query("INSERT INTO `users` VALUES (1,'batman','1234','nananana@batman.com'),(2,'bob','12345','bobthatsme@yahoo.com'),(3,'catlover','abcd','catlover@whiskers.com'),(4,'doglover','efds','doglover@bark.net'),(5,'jdoe','25478','jane@doe.com'),(6,'jsmith','1111','jsmith@gmail.com'),(7,'matty','2222','matty@csun.edu'),(8,'notbob','5555','stopcallingmebob@yahoo.com'),(9,'pacman','9999','pacman@gmail.com'),(10,'scooby','8888','scooby@doo.net')");
     db.query("UNLOCK TABLES");
-    return res.render('initdb', {message: "Success"});
-    
+    return res.render('initdb', {
+        message: "Success"
+    });
+
 }
 
 
@@ -154,14 +178,22 @@ exports.initdb = (req,res) => {
 
 
 //insert
-exports.insertblog = (req,res) =>{
-    const {uid} = req.body;
+exports.insertblog = (req, res) => {
+    const {
+        uid
+    } = req.body;
     tempUid = uid;
-    return res.render('insertblog',{userid:uid});
+    return res.render('insertblog', {
+        userid: uid
+    });
 }
 //new blog
-exports.subnewblog = (req,res)=>{
-    const {subject,descript,tag} = req.body;
+exports.subnewblog = (req, res) => {
+    const {
+        subject,
+        descript,
+        tag
+    } = req.body;
 
     //
     // db.query("SELECT COUNT(*) as count FROM blogs WHERE userid = ? AND date = ?",[tempUid,new Date()],(err,rows)=>{
@@ -180,156 +212,219 @@ exports.subnewblog = (req,res)=>{
     //     }
     // });
     //check date
-    db.query("SELECT count(userid) AS useridCount FROM blogs where userid = ? AND pdate = ?",[tempUid,postDate],(err,countuid)=>{
-        console.log("this is: "+countuid[0].useridCount+", and postDate: "+postDate);
-        if(err) throw err;
-        if(countuid[0].useridCount >= 2){
+    db.query("SELECT count(userid) AS useridCount FROM blogs where userid = ? AND pdate = ?", [tempUid, postDate], (err, countuid) => {
+        console.log("this is: " + countuid[0].useridCount + ", and postDate: " + postDate);
+        if (err) throw err;
+        if (countuid[0].useridCount >= 2) {
             console.log("Print at line 184: Failed to insert new blog")
-            return res.render('insertblog',{message:"Current userID: "+tempUid+" have already posted 2 blogs today"});
-        }else{
-            db.query("INSERT INTO `blogs` SET ?",{subject:subject,description:descript,pdate:new Date(),userid:tempUid},(err,results)=>{
-                if(err){
+            return res.render('insertblog', {
+                message: "Current userID: " + tempUid + " have already posted 2 blogs today"
+            });
+        } else {
+            db.query("INSERT INTO `blogs` SET ?", {
+                subject: subject,
+                description: descript,
+                pdate: new Date(),
+                userid: tempUid
+            }, (err, results) => {
+                if (err) {
                     console.log(err);
-                }else{
-                    return res.render('insertblog',{message:"Success"});
+                } else {
+                    return res.render('insertblog', {
+                        message: "Success"
+                    });
                 }
             });
-            tempBlogId=db.query("SELECT blogid FROM `blogs` WHERE userid= ?",[tempUid]);
+            tempBlogId = db.query("SELECT blogid FROM `blogs` WHERE userid= ?", [tempUid]);
             const tagArr = tag.split(",");
-            for(i =0;i < tagArr.length;i++){
-                db.query("INSERT INTO `blogstags` SET ?",{tag:tagArr[i],blogid:tempUid},(err)=>{
-                    if(err){
+            for (i = 0; i < tagArr.length; i++) {
+                db.query("INSERT INTO `blogstags` SET ?", {
+                    tag: tagArr[i],
+                    blogid: tempUid
+                }, (err) => {
+                    if (err) {
                         console.log(err);
                     }
                 });
             }
-            
+
         }
-        
+
     });
 
-    
+
 }
 
 //list blog
-exports.listBlog = (req,res)=>{
-    const {usid} = req.body;
-    db.query("SELECT * FROM blogs",(err,result)=>{
+exports.listBlog = (req, res) => {
+    const {
+        usid
+    } = req.body;
+    db.query("SELECT * FROM blogs", (err, result) => {
         if (err) throw err;
-        res.render('bloglist', {userData: result,mestest:usid});
+        res.render('bloglist', {
+            userData: result,
+            mestest: usid
+        });
     })
 }
 
 
 //comment page
-exports.commentpage = (req,res) =>{
-    return res.render('commentpage',{userid:tempUid});
+exports.commentpage = (req, res) => {
+    return res.render('commentpage', {
+        userid: tempUid
+    });
 }
 
 //submit new comment
-exports.subnewcomment = (req,res)=>{
-    const{blognum,senti,descript} = req.body;
+exports.subnewcomment = (req, res) => {
+    const {
+        blognum,
+        senti,
+        descript
+    } = req.body;
     let comDate = new Date();
-    db.query("SELECT * FROM blogs WHERE blogid = ? ",[blognum],(err,result)=>{
-        if(err) throw err;
-        if(result.length >0){
-            db.query("SELECT blogid,authorid FROM comments WHERE blogid =? AND authorid = ?",[blognum,tempUid], (err,ress)=>{
-                if(err) throw err;
-                if(ress.length > 0){
-                    return res.render('subcomment',{testText:"Each user can only comments a blog one time!"});
-                }else{
-                    db.query("SELECT * FROM blogs WHERE blogid = ? AND userid = ?",[blognum,tempUid],(err,resu)=>{
-                        if(err) throw err;
-                        if(resu.length > 0){
-                            return res.render('subcomment',{testText:"You can not comment your own blog"});
-                        }else{
-                            db.query("INSERT INTO `comments` SET ?",{sentiment:senti,description:descript,cdate:new Date(),blogid:blognum,authorid:tempUid},(err,results)=>{
-                                if(err) throw err;
+    db.query("SELECT * FROM blogs WHERE blogid = ? ", [blognum], (err, result) => {
+        if (err) throw err;
+        if (result.length > 0) {
+            db.query("SELECT blogid,authorid FROM comments WHERE blogid =? AND authorid = ?", [blognum, tempUid], (err, ress) => {
+                if (err) throw err;
+                if (ress.length > 0) {
+                    return res.render('subcomment', {
+                        testText: "Each user can only comments a blog one time!"
+                    });
+                } else {
+                    db.query("SELECT * FROM blogs WHERE blogid = ? AND userid = ?", [blognum, tempUid], (err, resu) => {
+                        if (err) throw err;
+                        if (resu.length > 0) {
+                            return res.render('subcomment', {
+                                testText: "You can not comment your own blog"
+                            });
+                        } else {
+                            db.query("INSERT INTO `comments` SET ?", {
+                                sentiment: senti,
+                                description: descript,
+                                cdate: new Date(),
+                                blogid: blognum,
+                                authorid: tempUid
+                            }, (err, results) => {
+                                if (err) throw err;
                                 console.log("Print at line 245: Success Comment");
-                                return res.render('subcomment',{testText:"Success"});
+                                return res.render('subcomment', {
+                                    testText: "Success"
+                                });
                             });
                         }
                     })
 
                 }
             })
-            
-        }else{
+
+        } else {
             console.log("Print at line 255: Failed to submmit comment");
-            return res.render('subcomment',{testText:"Failed: "+blognum});
+            return res.render('subcomment', {
+                testText: "Failed: " + blognum
+            });
         }
     })
-    
+
 }
 
 //serach result
 //List all the blogs of user X, such that all the comments are positive for these blogs. 
-exports.serres= (req,res)=>{
-    const {inputUser} = req.body;
-    db.query("SELECT * FROM comments WHERE blogid IN (SELECT blogid FROM blogs WHERE userid = ?) AND sentiment = ?",[inputUser,positiveSentiment],(err,resComment)=>{
-        if(err) throw err;
-        return res.render('searchresult',{commetnData:resComment});
+exports.serres = (req, res) => {
+    const {
+        inputUser
+    } = req.body;
+    db.query("SELECT * FROM comments WHERE blogid IN (SELECT blogid FROM blogs WHERE userid = ?) AND sentiment = ?", [inputUser, positiveSentiment], (err, resComment) => {
+        if (err) throw err;
+        return res.render('searchresult', {
+            commetnData: resComment
+        });
     })
-    
+
 }
 //List the users who posted the most number of blogs on 10/10/2020; if there is a tie,list all the users who have a tie.
 //the following query will return total number of blogs that user posted on 2021-08-05
 //SELECT userid,count(*) as "total" FROM dbms.blogs where pdate="2021-08-05" group by userid;
-exports.serblog= (req,res)=>{
-    let tempArr=[];
-    db.query("SELECT userid, COUNT(*) AS 'total' FROM dbms.blogs WHERE pdate = '2020-10-10' GROUP BY userid ORDER BY total DESC",(err,resMax)=>{
-        if(err) throw err;
-        if(resMax.length == 0){
-            return res.render('searchresult',{arrayContent:"No result!"});
-        }else{
-            if(resMax[0].total == 2){
-                for(let i=0;i<resMax.length;i++){
-                    if(resMax[i].total == 2){
+exports.serblog = (req, res) => {
+    let tempArr = [];
+    db.query("SELECT userid, COUNT(*) AS 'total' FROM dbms.blogs WHERE pdate = '2020-10-10' GROUP BY userid ORDER BY total DESC", (err, resMax) => {
+        if (err) throw err;
+        if (resMax.length == 0) {
+            return res.render('searchresult', {
+                arrayContent: "No result!"
+            });
+        } else {
+            if (resMax[0].total == 2) {
+                for (let i = 0; i < resMax.length; i++) {
+                    if (resMax[i].total == 2) {
                         tempArr.push(resMax[i].userid);
                     }
                 }
-                return res.render('searchresult',{arrayContent:"User "+tempArr+" posted most blogs"});
+                return res.render('searchresult', {
+                    arrayContent: "User " + tempArr + " posted most blogs"
+                });
             }
-            if(resMax[0].total == 1){
-                for(let i=0;i<resMax.length;i++){
-                    if(resMax[i].total == 1){
+            if (resMax[0].total == 1) {
+                for (let i = 0; i < resMax.length; i++) {
+                    if (resMax[i].total == 1) {
                         tempArr.push(resMax[i].userid);
                     }
                 }
-                return res.render('searchresult',{arrayContent:"User "+tempArr+" posted most blogs"});
+                return res.render('searchresult', {
+                    arrayContent: "User " + tempArr + " posted most blogs"
+                });
             }
         }
-        
+
     })
-    
+
 }
 // List the users who are followed by both X and Y. Usernames X and Y are inputs from the user. 
 //SELECT * FROM follows WHERE leaderid = ? AND followerid IN (SELECT followerid FROM follows WHERE leaderid = ?)
 //SELECT * FROM follows WHERE followerid = ? and leaderid in (select leaderid from follows where followerid = ?)
-exports.follwers= (req,res)=>{
-    const {userX,userY} = req.body;
-    db.query("SELECT * FROM follows WHERE followerid = ? and leaderid in (select leaderid from follows where followerid = ?)",[userX,userY],(err,resultUser)=>{
-        if(err) throw err;
-        if(resultUser.length >=1){
-            return res.render('searchresult',{userFollowedByXY: resultUser[0].leaderid,user1:userX,user2:userY});
-        }else{
-            return res.render('searchresult',{userFollowedByXY: "No Result"});
-        }
-        
-    })
-}
-exports.blogContainsTag= (req,res)=>{
-    const {tagX} = req.body;
-    db.query("SELECT b.blogid,b.subject,b.description,b.userid,blogstags.tag FROM blogs as b INNER JOIN blogstags ON b.blogid = blogstags.blogid  WHERE tag = ?",[tagX],(err,resTag)=>{
+exports.follwers = (req, res) => {
+    const {
+        userX,
+        userY
+    } = req.body;
+    db.query("SELECT * FROM follows WHERE followerid = ? and leaderid in (select leaderid from follows where followerid = ?)", [userX, userY], (err, resultUser) => {
         if (err) throw err;
-        return res.render('searchresult',{blogTag:resTag});
+        if (resultUser.length >= 1) {
+            return res.render('searchresult', {
+                userFollowedByXY: resultUser[0].leaderid,
+                user1: userX,
+                user2: userY
+            });
+        } else {
+            return res.render('searchresult', {
+                userFollowedByXY: "No Result"
+            });
+        }
+
     })
-    
 }
-exports.neverComment= (req,res)=>{
-    db.query("SELECT userid,username,email  FROM users WHERE userid NOT IN (SELECT authorid FROM comments)",(err,resUser)=>{
-        if(err) throw err;
-        return res.render('searchresult',{userInfo:resUser,titleInfo:"User Never Post Comment"});
+exports.blogContainsTag = (req, res) => {
+    const {
+        tagX
+    } = req.body;
+    db.query("SELECT b.blogid,b.subject,b.description,b.userid,blogstags.tag FROM blogs as b INNER JOIN blogstags ON b.blogid = blogstags.blogid  WHERE tag = ?", [tagX], (err, resTag) => {
+        if (err) throw err;
+        return res.render('searchresult', {
+            blogTag: resTag
+        });
     })
-    
+
+}
+exports.neverComment = (req, res) => {
+    db.query("SELECT userid,username,email  FROM users WHERE userid NOT IN (SELECT authorid FROM comments)", (err, resUser) => {
+        if (err) throw err;
+        return res.render('searchresult', {
+            userInfo: resUser,
+            titleInfo: "User Never Post Comment"
+        });
+    })
+
 }

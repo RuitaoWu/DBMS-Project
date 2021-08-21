@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        table, th, td {
+        table,
+        th,
+        td {
             border: 1px solid black;
         }
-        table{
+
+        table {
             border-collapse: collapse;
             width: 100%;
         }
@@ -20,76 +24,78 @@
         }
     </script>
 </head>
+
 <body>
     {{#if userFollowedByXY}}
-        <p style="font-size: 25px">User <b>{{userFollowedByXY}} </b>followed by <b>{{user1}}</b> and <b>{{user2}}</b></p>
+    <p style="font-size: 25px">User <b>{{userFollowedByXY}} </b>followed by <b>{{user1}}</b> and <b>{{user2}}</b></p>
     {{else}}
-        <p>Invalid input or no result(s)</p>
+    <p>Invalid input or no result(s)</p>
     {{/if}}
     {{#if commetnData}}
-        <table>
-            <tr>
-                <th>Comment ID</th>
-                <th>Sentiment</th>
-                <th>Descripthon</th>
-                <th>Comment Date</th>
-                <th>Blog ID</th>
-                <th>Author ID</th>
-            </tr>
-            {{#each commetnData}}
-            <tr>
-                <th>{{this.commentid}}</th>
-                <th>{{this.sentiment}}</th>
-                <th>{{this.description}}</th>
-                <th>{{this.cdate}}</th>
-                <th>{{this.blogid}}</th>
-                <th>{{this.authorid}}</th>
-            </tr>
-            {{/each}}
-        </table>
+    <table>
+        <tr>
+            <th>Comment ID</th>
+            <th>Sentiment</th>
+            <th>Descripthon</th>
+            <th>Comment Date</th>
+            <th>Blog ID</th>
+            <th>Author ID</th>
+        </tr>
+        {{#each commetnData}}
+        <tr>
+            <th>{{this.commentid}}</th>
+            <th>{{this.sentiment}}</th>
+            <th>{{this.description}}</th>
+            <th>{{this.cdate}}</th>
+            <th>{{this.blogid}}</th>
+            <th>{{this.authorid}}</th>
+        </tr>
+        {{/each}}
+    </table>
     {{/if}}
     {{#if blogTag}}
-        <table>
-            <tr>
-                <th>Blog ID</th>
-                <th>Subject</th>
-                <th>Descripthon</th>
-                <th>User ID</th>
-                <th>Tags</th>
-            </tr>
-            {{#each blogTag}}
-            <tr>
-                <th>{{this.blogid}}</th>
-                <th>{{this.subject}}</th>
-                <th>{{this.description}}</th>
-                <th>{{this.userid}}</th>
-                <th>{{this.tag}}</th>
-            </tr>
-            {{/each}}
-        </table>
+    <table>
+        <tr>
+            <th>Blog ID</th>
+            <th>Subject</th>
+            <th>Descripthon</th>
+            <th>User ID</th>
+            <th>Tags</th>
+        </tr>
+        {{#each blogTag}}
+        <tr>
+            <th>{{this.blogid}}</th>
+            <th>{{this.subject}}</th>
+            <th>{{this.description}}</th>
+            <th>{{this.userid}}</th>
+            <th>{{this.tag}}</th>
+        </tr>
+        {{/each}}
+    </table>
     {{/if}}
     {{#if userInfo}}
-        <h2>{{titleInfo}}</h2>
+    <h2>{{titleInfo}}</h2>
+    <table>
+        <tr>
+            <th>User ID</th>
+            <th>User Name</th>
+            <th>Email Address</th>
+        </tr>
+        {{#each userInfo}}
         <table>
             <tr>
-                <th>User ID</th>
-                <th>User Name</th>
-                <th>Email Address</th>
+                <th>{{this.userid}}</th>
+                <th>{{this.username}}</th>
+                <th>{{this.email}}</th>
             </tr>
-            {{#each userInfo}}
-            <table>
-                <tr>
-                    <th>{{this.userid}}</th>
-                    <th>{{this.username}}</th>
-                    <th>{{this.email}}</th>
-                </tr>
-            </table>
-            {{/each}}
         </table>
+        {{/each}}
+    </table>
     {{/if}}
-    {{#if  arrayContent}}
+    {{#if arrayContent}}
     <h3>{{arrayContent}}</h3>
     {{/if}}
     <br><button onclick="goBack()">Go Back</button>
 </body>
+
 </html>

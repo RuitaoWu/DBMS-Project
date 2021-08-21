@@ -7,49 +7,49 @@ const db = mysql.createConnection({
     password: process.env.PASSWORD,
     database: process.env.DATABASE
 })
-router.get('/',(req,res) => {
+router.get('/', (req, res) => {
     res.render('index');
 })
-router.get('/register',(req,res) => {
+router.get('/register', (req, res) => {
     res.render('regi');
 })
-router.get('/login',(req,res) => {
+router.get('/login', (req, res) => {
     res.render('signin');
 })
 
-router.get('/users',(req,res) => {
+router.get('/users', (req, res) => {
     res.render('user');
 })
 
-router.get('/initdb',(req,res) =>{
+router.get('/initdb', (req, res) => {
     res.render('initdb');
 })
-router.get('/insertblog',(req,res)=>{
+router.get('/insertblog', (req, res) => {
     res.render('insertblog');
 })
-router.get('/list', (req,res)=>{
+router.get('/list', (req, res) => {
     res.render('bloglist');
 })
-router.get('/comment',(req,res)=>{
+router.get('/comment', (req, res) => {
     res.render('commentpage');
 })
 
-router.get('/subcomment',(req,res)=>{
+router.get('/subcomment', (req, res) => {
     res.render('subcomment');
 })
-router.get('/result',(req,res)=>{
+router.get('/result', (req, res) => {
     res.render('searchresult');
 })
-router.get('/resultblog',(req,res)=>{
+router.get('/resultblog', (req, res) => {
     res.render('searchresult');
 })
-router.get('/resultfollwers',(req,res)=>{
+router.get('/resultfollwers', (req, res) => {
     res.render('searchresult');
 })
-router.get('/resultblogcontainstagx',(req,res)=>{
+router.get('/resultblogcontainstagx', (req, res) => {
     res.render('searchresult');
 })
-router.get('/resultusernevercomment',(req,res)=>{
+router.get('/resultusernevercomment', (req, res) => {
     res.render('searchresult');
 })
 module.exports = router;
