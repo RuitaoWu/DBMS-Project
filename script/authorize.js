@@ -125,9 +125,6 @@ exports.initdb = (req, res) => {
     db.query("use dbms");
     db.query("DROP TABLE IF EXISTS `blogs`");
     db.query("CREATE TABLE `blogs` (`blogid` int(10) unsigned NOT NULL AUTO_INCREMENT,`subject` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,`description` varchar(250) COLLATE utf8mb4_general_ci DEFAULT NULL,`pdate` date DEFAULT NULL,`userid` int(10) DEFAULT NULL,PRIMARY KEY (`blogid`), KEY `idx_blogs_pdate` (`pdate`), KEY `blogs_ibfk_1_idx` (`userid`),CONSTRAINT `blogs_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci");
-    //Trigger
-    //canont execute this sql, and it must be execute in MySQL
-    //db.query("DROP TRIGGER IF EXISTS `dbms`.`blogs_BEFORE_INSERT`;DELIMITER $$ USE `dbms`$$ CREATE DEFINER=`comp440`@`localhost` TRIGGER `blogs_BEFORE_INSERT` BEFORE INSERT ON `blogs` FOR EACH ROW BEGIN declare rowcount int; SELECT COUNT(*) INTO rowcount FROM blogs WHERE userid=NEW.userid AND pdate=CURDATE(); IF(rowcount>=2)THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'You cannot post more than two blogs per day!Please try tomorrow.'; END IF; END$$ DELIMITER ;");
     // db.query("/*!40101 SET character_set_client = @saved_cs_client */");
     db.query("LOCK TABLES `blogs` WRITE");
     db.query("INSERT INTO `blogs` VALUES (1,'Hello World','Hey everyone, this is my first blog. Hello world and all who inhabit it!','2020-03-15',6)");
@@ -166,6 +163,10 @@ exports.initdb = (req, res) => {
     db.query("LOCK TABLES `users` WRITE");
     db.query("INSERT INTO `users` VALUES (1,'batman','1234','nananana@batman.com'),(2,'bob','12345','bobthatsme@yahoo.com'),(3,'catlover','abcd','catlover@whiskers.com'),(4,'doglover','efds','doglover@bark.net'),(5,'jdoe','25478','jane@doe.com'),(6,'jsmith','1111','jsmith@gmail.com'),(7,'matty','2222','matty@csun.edu'),(8,'notbob','5555','stopcallingmebob@yahoo.com'),(9,'pacman','9999','pacman@gmail.com'),(10,'scooby','8888','scooby@doo.net')");
     db.query("UNLOCK TABLES");
+    //trigger
+    db.query("DROP TRIGGER IF EXISTS `dbms`.`blogs_BEFORE_INSERT`;");
+    db.query("CREATE TRIGGER `blogs_BEFORE_INSERT` BEFORE INSERT ON `blogs` FOR EACH ROW BEGIN \ declare rowcount int;\ SELECT COUNT(*) INTO rowcount FROM blogs WHERE userid=NEW.userid AND pdate=new.pdate;\IF(rowcount>=2)THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'You cannot post more than two blogs per day!Please try tomorrow.';\ END IF;\ END");
+    //****** */
     return res.render('initdb', {
         message: "Success"
     });
