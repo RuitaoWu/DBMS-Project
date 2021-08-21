@@ -307,7 +307,12 @@ exports.follwers= (req,res)=>{
     const {userX,userY} = req.body;
     db.query("SELECT * FROM follows WHERE followerid = ? and leaderid in (select leaderid from follows where followerid = ?)",[userX,userY],(err,resultUser)=>{
         if(err) throw err;
-        return res.render('searchresult',{userFollowedByXY: resultUser[0].leaderid,user1:userX,user2:userY});
+        if(resultUser.length >=1){
+            return res.render('searchresult',{userFollowedByXY: resultUser[0].leaderid,user1:userX,user2:userY});
+        }else{
+            return res.render('searchresult',{userFollowedByXY: "No Result"});
+        }
+        
     })
 }
 exports.blogContainsTag= (req,res)=>{
