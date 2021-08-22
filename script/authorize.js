@@ -214,7 +214,7 @@ exports.subnewblog = (req, res) => {
     // });
     //check date
     db.query("SELECT count(userid) AS useridCount FROM blogs where userid = ? AND pdate = ?", [tempUid, postDate], (err, countuid) => {
-        console.log("this is: " + countuid[0].useridCount + ", and postDate: " + postDate);
+        console.log("At line 217 information: this is: " + countuid[0].useridCount + ", and postDate: " + postDate);
         if (err) throw err;
         if (countuid[0].useridCount >= 2) {
             console.log("Print at line 184: Failed to insert new blog")
@@ -222,12 +222,7 @@ exports.subnewblog = (req, res) => {
                 message: "Current userID: " + tempUid + " have already posted 2 blogs today"
             });
         } else {
-            db.query("INSERT INTO `blogs` SET ?", {
-                subject: subject,
-                description: descript,
-                pdate: new Date(),
-                userid: tempUid
-            }, (err, results) => {
+            db.query("INSERT INTO `blogs` SET ?", {subject: subject,description: descript,pdate: new Date(),userid: tempUid}, (err, results) => {
                 if (err) {
                     console.log(err);
                 } else {
@@ -236,18 +231,18 @@ exports.subnewblog = (req, res) => {
                     });
                 }
             });
-            tempBlogId = db.query("SELECT blogid FROM `blogs` WHERE userid= ?", [tempUid]);
             const tagArr = tag.split(",");
-            for (i = 0; i < tagArr.length; i++) {
-                db.query("INSERT INTO `blogstags` SET ?", {
-                    tag: tagArr[i],
-                    blogid: tempUid
-                }, (err) => {
-                    if (err) {
-                        console.log(err);
-                    }
-                });
-            }
+            db.query("SELECT max(blogid) as maxbid FROM `blogs` WHERE userid= ?", [tempUid],(err,resbid)=>{
+                if(err) throw err;
+                for (i = 0; i < tagArr.length; i++) {
+                    db.query("INSERT INTO `blogstags` SET ?", {blogid: resbid[0].maxbid,tag: tagArr[i]}, (err) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            });
+            
 
         }
 
